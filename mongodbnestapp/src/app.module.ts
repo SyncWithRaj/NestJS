@@ -7,13 +7,15 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { EmployeeService } from './employee/employee.service';
 import { EmployeeModule } from './employee/employee.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
   MongooseModule.forRoot(process.env.MONGO_URI!),
     StudentModule,
     UserModule,
-    EmployeeModule],
+    EmployeeModule,
+    ProductModule],
   controllers: [AppController],
   providers: [AppService],
 })
