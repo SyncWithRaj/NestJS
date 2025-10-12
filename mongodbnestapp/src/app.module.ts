@@ -5,12 +5,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { StudentModule } from './student/student.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { EmployeeService } from './employee/employee.service';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
   MongooseModule.forRoot(process.env.MONGO_URI!),
     StudentModule,
-    UserModule],
+    UserModule,
+    EmployeeModule],
   controllers: [AppController],
   providers: [AppService],
 })
