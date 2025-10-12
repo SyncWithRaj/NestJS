@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { EmployeeService } from './employee/employee.service';
 import { EmployeeModule } from './employee/employee.module';
 import { ProductModule } from './product/product.module';
+import { LibraryModule } from './library/library.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -15,7 +16,8 @@ import { ProductModule } from './product/product.module';
     StudentModule,
     UserModule,
     EmployeeModule,
-    ProductModule],
+    ProductModule,
+    LibraryModule],
   controllers: [AppController],
   providers: [AppService],
 })
