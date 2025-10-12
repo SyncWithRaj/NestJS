@@ -23,6 +23,21 @@ export class StudentService {
     }
 
     async updateStudent(id: string, data: Partial<Student>): Promise<Student | null> {
-        return this.studentModel.findByIdAndUpdate(id, data, { new: true }).exec()
+        // return this.studentModel.findByIdAndUpdate(id, data, { new: true }).exec()
+
+        const updated = await this.studentModel.findByIdAndUpdate(id, {
+            name: data.name ?? null,
+            age: data.age ?? null,
+            email: data.email ?? null,
+        }, { overwrite: true, new: true })
+        return updated;
+    }
+
+    async patchStudent(id: string, data: Partial<Student>): Promise<Student | null> {
+        return this.studentModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    }
+
+    async deleteStudent(id: string): Promise<Student | null> {
+        return this.studentModel.findByIdAndDelete(id).exec();
     }
 }
