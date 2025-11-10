@@ -26,4 +26,13 @@ export class EmployeesService {
         }
         return employee;
     }
+
+    async update(id: number, updatedData: Partial<Employee>): Promise<Employee> {
+        const employee = await this.employeeRepository.findOneBy({ id });
+        if (!employee) {
+            throw new NotFoundException(`Employee with ID ${id} not found`)
+        }
+        const updated = Object.assign(employee, updatedData);
+        return this.employeeRepository.save(updated);
+    }
 }

@@ -1,28 +1,31 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Controller, Post, Body, Get, Param, Put, Patch } from '@nestjs/common';
+import { EmployeesService } from './employees.service';
 import { Employee } from './employees.entity';
-import { Repository } from 'typeorm';
 
 @Controller('employees')
 export class EmployeesController {
-  constructor(
-    @InjectRepository(Employee)
-    private readonly employeeRepository: Repository<Employee>,
-  ) { }
+  constructor(private readonly employeesService: EmployeesService) { }
 
   @Post()
   async create(@Body() employeeData: Partial<Employee>): Promise<Employee> {
-    const employee = this.employeeRepository.create(employeeData);
-    return await this.employeeRepository.save(employee);
+    return this.employeesService.create(employeeData);
   }
 
   @Get()
   async findAll(): Promise<Employee[]> {
-    return this.employeeRepository.find();
+    return this.employeesService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Employee | null> {
-    return this.employeeRepository.findOne({ where: { id } });
+  async findOne(@Param('id') id: string): Promise<Employee> {
+    return this.employeesService.findOne(Number(id));
+  }
+
+  @Put(':id')
+  async updateEmployee(
+    @Param('id') id: number,
+    @Body() body: Partial<Employee>,
+  ): Promise<Employee> {
+    return this.employeesService.update(id, body);
   }
 }
